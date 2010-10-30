@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<project name="Hello World" default="build" basedir=".">
+
+  <description>The Hello World of build files.</description>
+
+  <property name="debug" value="true" overwrite="false" />
+
+  <target name="clean" description="remove all generated files">
+    <delete failonerror="false">
+      <fileset>
+        <include name="*.mdb" />
+        <include name="*.exe" />
+        <include name="*.dll" />
+      </fileset>
+    </delete>
+  </target>
+
+  <target name="build" description="compiles mailgun library">
+
+    <csc target="library" output="Mailgun.dll" debug="${debug}">
+      <sources>
+        <include name="MailgunClient.cs" />
+      </sources>
+      <references>
+        <include name="System.Web.dll" />
+      </references>
+    </csc>
+  </target>
+
+  <target name="build_samples" description="compiles the source code"
+          depends = "build">
+
+    <foreach item="File" property="filename">
+      <in>
+        <items>
+          <include name="samples/**" />
+        </items>
+      </in>
+      <do>
+        <csc target="exe" output="${path::get-file-name-without-extension(filename)}.exe" debug="${debug}">
+          <sources>
+            <include name="${path::get-full-path(filename)}" />
+          </sources>
+          <references>
+            <include name="Mailgun.dll" />
+          </references>
+        </csc>
+      </do>
+
+    </foreach>
+
+  </target>
+
+  <target name = "run_sample" depends = "build_samples">
+    <exec program = "${sample}.exe"/>    
+  </target>
+
+</project>

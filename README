@@ -1,0 +1,61 @@
+Mailgun API wrapper for C#
+
+Documentation:
+=============
+
+* Online docs
+Please visit our documentation page at 
+http://documentation.mailgun.net
+
+
+Installation:
+=============
+* Make sure you have nant installed
+* build Mailgun.dll
+
+> cd mailgun.cs
+> nant
+> ls
+Mailgun.dll
+
+Samples tryout:
+===================
+> nant run_sample -D:sample=MailboxSample
+> nant run_sample -D:sample=RouteSample
+> nant run_sample -D:sample=SendingSample
+
+Getting started:
+================
+
+using System;
+using System.Collections.Generic;
+using MailgunClient;
+using System.Text;
+
+namespace MailgunSamples
+{
+    public class MailboxSample
+    {
+
+        public static void Main ()
+        {
+            Mailgun.Init("key-afy6amxoo2fnj$u@mc");
+
+            try {               
+                //List all mailboxes
+                List<Mailbox> list = Mailbox.Find ();
+                Console.WriteLine ("Mailboxes:\n");
+                foreach (Mailbox m in list)
+                    Console.WriteLine ("{0}@{1} {2}", m.User, m.Domain, m.Size);
+            } catch (MailgunException ex) {
+                Console.WriteLine (ex.StackTrace);
+                Console.WriteLine (ex.Message);
+            }
+        }
+    }
+}
+
+For more visit http://documentation.mailgun.net
+
+--
+MG team
