@@ -24,6 +24,17 @@ Samples tryout:
 > nant run_sample -D:sample=RouteSample
 > nant run_sample -D:sample=SendingSample
 
+Running on Mono:
+================
+After the initial Mono installation you’ll have no trusted roots certificates pre-installed.
+In case if accessing mailgun via SSH you need to issue the following command:
+
+> mozroots --import --sync
+
+Otherwise, you'll get the following error when connecting via SSH:
+Error getting response stream (Write: The authentication or decryption has failed.): SendFailure
+
+
 Getting started:
 ================
 

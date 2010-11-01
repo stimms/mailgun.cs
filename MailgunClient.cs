@@ -45,7 +45,7 @@ namespace MailgunClient
         /// <param name="apiKey"></param>
         public static void Init (string apiKey)
         {
-            Init (apiKey, "http://mailgun.net/api");
+            Init (apiKey, "https://mailgun.net/api");
         }
 
         public static void Init (string apiKey, string apiUrl)
