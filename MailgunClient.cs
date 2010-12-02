@@ -10,6 +10,7 @@ using System.Collections.Specialized;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Web.Script.Serialization;
 
 
 [assembly: AssemblyTitle("MailgunClient")]
@@ -614,9 +615,44 @@ namespace MailgunClient
 
     public class MailgunMessage
     {
+        public static string MAILGUN_TAG = "X-Mailgun-Tag";
+
+        public class Options
+        {
+            private Dictionary<string, Dictionary<string, string>> options;
+            
+            public Options()
+            {
+                options = new Dictionary<string, Dictionary<string, string>>();
+                options["headers"] = new Dictionary<string, string>();
+            }
+
+            public void SetHeader(string header, string value)
+            {
+                options["headers"][header] = value;
+            }
+
+            public String toJSON()
+            {
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                return serializer.Serialize(options);
+            }
+        }
+
         public static void SendText (string sender, string recipients, string subject, string text)
         {
             SendText (sender, recipients, subject, text, "");
+        }
+
+
+        public static void SendText (string sender, string recipients, string subject, string text, string servername)
+        {
+            SendText (sender, recipients, subject, text, servername, null);
+        }
+
+        public static void SendText (string sender, string recipients, string subject, string text, MailgunMessage.Options options)
+        {
+            SendText (sender, recipients, subject, text, "", options);
         }
 
         /// <summary>
@@ -627,13 +663,18 @@ namespace MailgunClient
         /// <param name="subject">message subject</param>
         /// <param name="text">message text</param>
         /// <param name="servername">sending server (can be empty, use 'best' server)</param>
-        public static void SendText (string sender, string recipients, string subject, string text, string servername)
+        /// <param name="options">sending options (e.g. add headers to message)</param>
+        public static void SendText (string sender, string recipients, string subject, string text, string servername, MailgunMessage.Options options)
         {
             NameValueCollection req = new NameValueCollection ();
             req.Add ("sender", sender);
             req.Add ("recipients", recipients);
             req.Add ("subject", subject);
             req.Add ("body", text);
+            if(options != null) {
+                req.Add("options", options.toJSON());
+            }
+
             byte[] data = getWWWFormData (req);
             HttpWebRequest wr = Mailgun.OpenRequest (messagesUrl ("txt", servername), "POST");
             wr.ContentType = "application/x-www-form-urlencoded";
