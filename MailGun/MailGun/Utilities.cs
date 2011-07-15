@@ -8,8 +8,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 
 using System.Runtime.InteropServices;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Web.Script.Serialization;
 
 namespace MailGun
