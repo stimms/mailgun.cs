@@ -1,0 +1,5 @@
+C:\Users\stimms\Documents\Visual Studio 2010\Projects\mailgun.cs\MailGun\MailGun\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\stimms\Documents\Visual Studio 2010\Projects\mailgun.cs\MailGun\MailGun\bin\Debug\MailGun.dll
+C:\Users\stimms\Documents\Visual Studio 2010\Projects\mailgun.cs\MailGun\MailGun\bin\Debug\MailGun.pdb
+C:\Users\stimms\Documents\Visual Studio 2010\Projects\mailgun.cs\MailGun\MailGun\obj\Debug\MailGun.dll
+C:\Users\stimms\Documents\Visual Studio 2010\Projects\mailgun.cs\MailGun\MailGun\obj\Debug\MailGun.pdb
